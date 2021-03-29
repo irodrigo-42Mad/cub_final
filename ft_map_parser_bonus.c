@@ -6,18 +6,18 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 11:14:45 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/21 11:05:45 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 12:01:37 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
-int			parsename(const char *text, const char *compare)
+int	parsename(const char *text, const char *compare)
 {
-	int len1;
-	int len2;
-	int cont;
-	int act;
+	int	len1;
+	int	len2;
+	int	cont;
+	int	act;
 
 	len1 = ft_strlen(text) - 1;
 	len2 = ft_strlen(compare);
@@ -34,12 +34,12 @@ int			parsename(const char *text, const char *compare)
 	return (1);
 }
 
-int			ft_check_gamer(t_game_draw *mygame)
+int	ft_check_gamer(t_game_draw *mygame)
 {
 	if (mygame->gamer.count == 0)
-		return (ft_put_error(TIT_003, MSG1_015, -1));
+		exit(ft_put_error(TIT_003, MSG1_015, -1));
 	if (mygame->gamer.count > 1)
-		return (ft_put_error(TIT_003, MSG1_016, -1));
+		exit(ft_put_error(TIT_003, MSG1_016, -1));
 	return (1);
 }
 
@@ -47,7 +47,7 @@ int			ft_check_gamer(t_game_draw *mygame)
 ** in this function creates a dummy map that check if prime map is closed
 */
 
-int			ft_check_close(t_game_draw *mygame)
+int	ft_check_close(t_game_draw *mygame)
 {
 	char	**tmp;
 	int		line;
@@ -55,8 +55,11 @@ int			ft_check_close(t_game_draw *mygame)
 	line = 0;
 	tmp = NULL;
 	if (!tmp)
-		if (!(tmp = ft_calloc(mygame->map_dim.h, sizeof(char *))))
-			return (ft_put_error(TIT_004, MSG1_017, -1));
+	{
+		tmp = ft_calloc(mygame->map_dim.h, sizeof(char *));
+		if (!tmp)
+			exit(ft_put_error(TIT_004, MSG1_017, -1));
+	}
 	while (line < mygame->map_dim.h)
 	{
 		tmp[line] = ft_strdup(mygame->worldmap[line]);
@@ -70,18 +73,16 @@ int			ft_check_close(t_game_draw *mygame)
 	return (0);
 }
 
-void		ft_checkborder(int x, int y, char **str, t_game_draw *err)
+void	ft_checkborder(int x, int y, char **str, t_game_draw *err)
 {
 	if (err->map_err != -1)
 	{
-		
-		
-		if (x == 0 || y == 0 || y == (int)ft_strlen(str[x]) - 1 ||
-			x == err->map_dim.h - 1 || y >= (int)ft_strlen(str[x + 1])
+		if (x == 0 || y == 0 || y == (int)ft_strlen(str[x]) - 1
+			|| x == err->map_dim.h - 1 || y >= (int)ft_strlen(str[x + 1])
 			|| y >= (int)ft_strlen(str[x - 1]))
 		{
 			err->map_err = -1;
-			ft_write_error("error en mapa", "mapa abierto");
+			ft_write_error("Map error\n", "Open map structure\n");
 			exit(-1);
 		}
 		str[x][y] = '3';

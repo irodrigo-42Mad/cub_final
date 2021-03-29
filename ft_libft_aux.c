@@ -6,7 +6,7 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 10:41:14 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/13 23:42:57 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/24 13:10:07 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_extract_text(char *line, char c)
 	return (line);
 }
 
-int		ft_get_sign(char ch)
+int	ft_get_sign(char ch)
 {
 	if (ch == '-' || ch == '+')
 	{
@@ -29,12 +29,12 @@ int		ft_get_sign(char ch)
 	return (1);
 }
 
-int		ft_atoi_color(char *line, int *i)
+int	ft_atoi_color(char *line, int *i)
 {
-	int n;
-	int val;
-	int pos;
-	int sign;
+	int	n;
+	int	val;
+	int	pos;
+	int	sign;
 
 	n = 0;
 	ft_skip_spaces(line, i);
@@ -52,13 +52,15 @@ int		ft_atoi_color(char *line, int *i)
 	return (n * sign);
 }
 
-int		ft_isspace(char ch)
+int	ft_isspace(char ch)
 {
-	return ((ch == ' ' || ch == '\t' || ch == '\n' ||
-		ch == '\r' || ch == '\v' || ch == '\f') ? 1 : 0);
+	if (ch == ' ' || ch == '\t' || ch == '\n'
+		|| ch == '\r' || ch == '\v' || ch == '\f')
+		return (1);
+	return (0);
 }
 
-int		ft_skip_spaces(char *line, int *i)
+int	ft_skip_spaces(char *line, int *i)
 {
 	while (ft_isspace(line[*i]))
 		(*i)++;

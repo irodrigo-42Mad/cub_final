@@ -6,12 +6,12 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 11:23:47 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/21 10:58:17 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/29 13:18:41 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _CUB3D_H
-# define _CUB3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include "./libft/libft.h"
 # include "./colors.h"
@@ -63,7 +63,7 @@
 /*
 **Resolution structure
 */
-typedef struct		s_resol
+typedef struct s_resol
 {
 	int				h;
 	int				w;
@@ -72,22 +72,32 @@ typedef struct		s_resol
 /*
 **Drawing point structure
 */
-typedef struct		s_dpoint
+typedef struct s_dpoint
 {
 	double			x;
 	double			y;
 }					t_dpoint;
 
-typedef struct		s_ipoint
+typedef struct s_ipoint
 {
 	int				x;
 	int				y;
 }					t_ipoint;
 
 /*
+** texture for GNL
+*/
+typedef struct s_text
+{
+	char		*buffer;
+	int			r;
+	char		*aux;
+}					t_text;
+
+/*
 **texture control structure
 */
-typedef struct		s_cnt_txts
+typedef struct s_cnt_txts
 {
 	int				north;
 	int				south;
@@ -109,7 +119,7 @@ typedef struct		s_cnt_txts
 /*
 **raycast control structure
 */
-typedef struct		s_raycast
+typedef struct s_raycast
 {
 	int				x;
 	double			posx;
@@ -147,7 +157,7 @@ typedef struct		s_raycast
 /*
 **texture container structure
 */
-typedef struct		s_textures
+typedef struct s_textures
 {
 	int				id;
 	int				width[8];
@@ -164,9 +174,8 @@ typedef struct		s_textures
 /*
 **Individual sprite definition and usage
 */
-typedef struct		s_sprite
+typedef struct s_sprite
 {
-	int				sprn;
 	double			spr_dist;
 	t_dpoint		spr_pos;
 }					t_sprite;
@@ -174,7 +183,7 @@ typedef struct		s_sprite
 /*
 **gamer control structure
 */
-typedef struct		s_gamer
+typedef struct s_gamer
 {
 	t_ipoint		pos;
 	int				count;
@@ -184,7 +193,7 @@ typedef struct		s_gamer
 /*
 **Keyboard control structures
 */
-typedef struct		s_key_ctrl
+typedef struct s_key_ctrl
 {
 	int				a_status;
 	int				d_status;
@@ -201,7 +210,7 @@ typedef struct		s_key_ctrl
 /*
 **bmp image format header
 */
-typedef struct		s_bmp_hdr
+typedef struct s_bmp_hdr
 {
 	unsigned int	f_size;
 	unsigned char	rsvd_1;
@@ -239,7 +248,7 @@ typedef struct		s_bmp_hdr
 **idx_pos			pos
 */
 
-typedef struct		s_game_draw
+typedef struct s_game_draw
 {
 	t_resol			win;
 	int				resx;
@@ -331,15 +340,17 @@ void				ft_write_error(char *err_tit, char *errmsg);
 */
 int					ft_chk_read(char *fname);
 int					ft_checkfilestatus(int status, char *elmt,
-							t_game_draw *mygame);
+						t_game_draw *mygame);
 void				ft_set_txt_path(char *path, char *elmt,
-							t_game_draw *mygame);
+						t_game_draw *mygame);
 int					parsename(const char *text, const char *compare);
 
 /*
 **game file parsing
 */
 int					get_next_line(int fd, char **line);
+void				ft_set_string(char *s[4096], char *buffer,
+						int fd, char *aux);
 int					get_info(t_game_draw *g, char *l);
 int					read_file(int argc, char *pathname,
 						t_game_draw *mygame);
@@ -358,9 +369,9 @@ void				ft_create_matrix (t_game_draw *mygame);
 int					ft_reserve_worldmap(t_game_draw *mygame);
 int					ft_get_line_width(char *mapchar, int pos);
 int					ft_setmap_ch(t_game_draw *mygame, int mat_pos,
-							int line, int pos);
+						int line, int pos);
 void				ft_setgamer(t_game_draw *mygame, int mat_pos,
-							int line);
+						int line);
 int					ft_parse_map(t_game_draw *mygame);
 int					ft_check_gamer(t_game_draw *mygame);
 int					ft_check_close(t_game_draw *mygame);
@@ -390,8 +401,9 @@ void				to_img(t_game_draw *mygame);
 **screenshot functions
 */
 int					write_bmp_header(int fd, int filesize,
-							t_game_draw *mygame);
+						t_game_draw *mygame);
 int					write_bmp_data(int file, t_game_draw *mygame, int pad);
+int					doscreenshot(t_game_draw *mygame);
 
 /*
 **Keyboard functions
@@ -414,13 +426,18 @@ int					ft_charge_txt(t_game_draw *mygame, int elm, char *path);
 void				ft_swap_int(int *a, int *b);
 void				ft_swap_double(double *a, double *b);
 int					ft_skip_spaces(char *line, int *i);
+int					ft_n_err(int n_err);
+void				ft_set_mapchar(t_game_draw *mygame, int map_pos, int line,
+						int pos); // new
+void				ft_init_var(int *line, int *pos, int *dim);
+int					ft_init_buffer(char *buffer, int fd, char **line);
 
 /*
 **mlx functions
 */
 int					ft_getpixel(t_game_draw *map, int x, int y);
 void				ft_mlx_pixel_put(t_game_draw *mygame, int x,
-							int y, int color);
+						int y, int color);
 int					ft_close(t_game_draw *mygame, int win);
 
 /*
@@ -431,9 +448,6 @@ void				ft_freemap(t_game_draw *mygame);
 void				ft_fretable(char **fra, t_game_draw *mygame);
 void				ft_clean_map(t_game_draw *mygame);
 void				ft_clean_mapchar(t_game_draw *mygame);
-
-
-/* function to print dummy map floodfill only for test purposes */
-void				ft_print_dummy (char **map, int myheight);
+void				ft_free_textures(t_game_draw *mygame);
 
 #endif

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_screen_save.c                                   :+:      :+:    :+:   */
+/*   ft_screen_save_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 03:24:19 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/02/27 19:22:41 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 12:05:27 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
 void	set_int_in_char(unsigned char *start, int value)
 {
@@ -20,19 +20,19 @@ void	set_int_in_char(unsigned char *start, int value)
 	start[3] = (unsigned char)(value >> 24);
 }
 
-int		get_color(t_game_draw *mygame, int x, int y)
+int	get_color(t_game_draw *mygame, int x, int y)
 {
 	int	rgb;
 	int	color;
 
-	color = *(int*)(mygame->canvas_ptr
+	color = *(int *)(mygame->canvas_ptr
 			+ (4 * (int)mygame->win.w * ((int)mygame->win.h - 1 - y))
 			+ (4 * x));
 	rgb = (color & 0xFF0000) | (color & 0x00FF00) | (color & 0x0000FF);
 	return (rgb);
 }
 
-int		write_bmp_header(int fd, int filesize, t_game_draw *mygame)
+int	write_bmp_header(int fd, int filesize, t_game_draw *mygame)
 {
 	int				i;
 	unsigned char	bmpfileheader[60];
@@ -52,7 +52,7 @@ int		write_bmp_header(int fd, int filesize, t_game_draw *mygame)
 	return (!(write(fd, bmpfileheader, 60) < 0));
 }
 
-int		write_bmp_data(int file, t_game_draw *mygame, int pad)
+int	write_bmp_data(int file, t_game_draw *mygame, int pad)
 {
 	const unsigned char	zero[3] = {0, 0, 0};
 	int					i;

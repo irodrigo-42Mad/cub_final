@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_save_bmp.c                                      :+:      :+:    :+:   */
+/*   ft_save_bmp_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 12:09:19 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 12:29:13 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 12:04:55 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
-int		doscreenshot(t_game_draw *mygame)
+int	doscreenshot(t_game_draw *mygame)
 {
-	int file;
-	int filesize;
+	int	file;
+	int	filesize;
 	int	pad;
 
 	pad = (4 - ((int)mygame->win.w * 3) % 4) % 4;
 	filesize = 60 + (3 * ((int)mygame->win.w + pad) * (int)mygame->win.h);
 	remove("screenshot.bmp");
-	if ((file = open("screenshot.bmp", O_WRONLY | O_CREAT
-		| O_TRUNC | O_APPEND, 777)) < 0)
+	file = open("screenshot.bmp", O_WRONLY | O_CREAT
+			| O_TRUNC | O_APPEND, 777);
+	if (file < 0)
 		return (0);
 	if (!write_bmp_header(file, filesize, mygame))
 		return (0);

@@ -6,20 +6,25 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 16:27:52 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 13:15:00 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/26 12:40:27 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_chk_read(char *fname)
+int	ft_chk_read(char *fname)
 {
-	int fd;
-	int errno;
+	int	fd;
+	int	errno;
 
 	fd = open(fname, O_RDONLY);
 	if (fd < 0)
-		return (errno == ENOENT) ? -1 : -2;
+	{
+		if (errno == ENOENT)
+			return (-1);
+		else
+			return (-2);
+	}
 	return (fd);
 }
 
@@ -27,22 +32,25 @@ int		ft_chk_read(char *fname)
 **return -1	 es error al cargar la textura en la matriz de texturas
 */
 
-int		ft_charge_txt(t_game_draw *mygame, int elm, char *path)
+int	ft_charge_txt(t_game_draw *mygame, int elm, char *path)
 {
 	mygame->tx.wlone[elm] = mlx_xpm_file_to_image(mygame->mlx_ptr, path,
-		&mygame->tx.width[elm], &mygame->tx.height[elm]);
+			&mygame->tx.width[elm], &mygame->tx.height[elm]);
 	if (mygame->tx.wlone[elm] == NULL || mygame->tx.width[elm] != 64
 		|| mygame->tx.height[elm] != 64)
 		return (-1);
 	mygame->tx.wdata[elm] = mlx_get_data_addr(mygame->tx.wlone[elm],
-		&mygame->tx.wbpp[elm], &mygame->tx.wsl[elm], &mygame->tx.wendian[elm]);
+			&mygame->tx.wbpp[elm], &mygame->tx.wsl[elm],
+			&mygame->tx.wendian[elm]);
+	ft_clean_arr(path);
+	free(path);
 	return (0);
 }
 
-int		ft_load_txt(t_game_draw *mygame)
+int	ft_load_txt(t_game_draw *mygame)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	i = 0;
 	status = 0;

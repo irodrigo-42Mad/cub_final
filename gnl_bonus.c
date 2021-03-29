@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl.c                                              :+:      :+:    :+:   */
+/*   gnl_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 17:07:08 by jdiaz-co          #+#    #+#             */
-/*   Updated: 2021/03/17 14:01:56 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/26 12:07:48 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
 static int	fill_char(char **s, char **line, int fd)
 {
@@ -51,30 +51,31 @@ static int	result(int r, char **s, char **line, int fd)
 	return (fill_char(s, line, fd));
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	char		*buffer;
-	int			r;
-	char		*aux;
+	t_text		*data;
 	static char	*s[4096];
 
-	if (!(buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1)) ||
-				fd < 0 || line == NULL)
+	data = ft_calloc(1, sizeof(t_text));
+	data->buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1);
+	if (!data->buffer || fd < 0 || line == NULL)
 		return (-1);
-	while ((r = read(fd, buffer, BUFFER_SIZE)) > 0)
+	data->r = read(fd, data->buffer, BUFFER_SIZE);
+	while (data->r > 0)
 	{
-		buffer[r] = '\0';
+		data->buffer[data->r] = '\0';
 		if (s[fd] == NULL)
-			s[fd] = ft_strdup(buffer);
+			s[fd] = ft_strdup(data->buffer);
 		else
 		{
-			aux = ft_strjoin(s[fd], buffer);
+			data->aux = ft_strjoin(s[fd], data->buffer);
 			free(s[fd]);
-			s[fd] = aux;
+			s[fd] = data->aux;
 		}
 		if (ft_strchr(s[fd], '\n'))
 			break ;
+		data->r = read(fd, data->buffer, BUFFER_SIZE);
 	}
-	free(buffer);
-	return (result(r, s, line, fd));
+	free(data->buffer);
+	return (result(data->r, s, line, fd));
 }

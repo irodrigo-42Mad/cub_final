@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_file.c                                    :+:      :+:    :+:   */
+/*   ft_parse_file_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 02:35:13 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 13:12:28 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 13:13:20 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
-static int		ft_resolution(t_game_draw *mygame, char *line, int *pos)
+static int	ft_resolution(t_game_draw *mygame, char *line, int *pos)
 {
 	if (mygame->map_read == 1)
-		return (ft_put_error(TIT_009, MSG1_019, -9));
+		exit(ft_put_error(TIT_009, MSG1_019, -9));
 	if (mygame->win.w != 0 || mygame->win.h != 0)
-		return (ft_put_error(TIT_005, MSG1_006, -3));
+		exit(ft_put_error(TIT_005, MSG1_006, -3));
 	(*pos)++;
 	mygame->win.w = ft_atoi_cub(line, pos);
 	mygame->win.h = ft_atoi_cub(line, pos);
 	ft_skip_spaces(line, pos);
 	if (mygame->win.w <= 0 || mygame->win.h <= 0 || line[*pos] != '\0')
-		return (ft_put_error(TIT_005, MSG1_007, -4));
+		exit(ft_put_error(TIT_005, MSG1_007, -4));
 	return (0);
 }
 
-static int		getcolor(unsigned int *color, char *line,
+static int	getcolor(unsigned int *color, char *line,
 						int *pos, t_game_draw *game)
 {
 	game->r = -1;
@@ -57,16 +57,16 @@ static int		getcolor(unsigned int *color, char *line,
 	return (0);
 }
 
-static int		takeline(t_game_draw *mygame, char *line)
+static int	takeline(t_game_draw *mygame, char *line)
 {
-	char *temp2;
-	char *temp;
+	char	*temp2;
+	char	*temp;
 
 	if (mygame->map_read != 1)
 	{
 		mygame->map_read = 1;
 		if (ft_prerequisites(mygame) == -1)
-			return (ft_put_error(TIT_008, MSG1_014, -1));
+			exit(ft_put_error(TIT_008, MSG1_014, -1));
 	}
 	temp = ft_strjoin(line, "\n");
 	temp2 = mygame->mapchar;
@@ -78,7 +78,7 @@ static int		takeline(t_game_draw *mygame, char *line)
 	return (0);
 }
 
-int				get_info(t_game_draw *g, char *l)
+int	get_info(t_game_draw *g, char *l)
 {
 	if (l[g->pos] == 'R' && sp(l[g->pos + 1]) == 1)
 		g->n_err = ft_resolution(g, l, &g->pos);
@@ -102,5 +102,5 @@ int				get_info(t_game_draw *g, char *l)
 		g->n_err = takeline(g, " ");
 	else if (l[g->pos] == '\0' && g->map_read == 0)
 		g->n_err = 0;
-	return (g->n_err < 0 ? -1 : 0);
+	return (ft_n_err(g->n_err));
 }

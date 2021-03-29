@@ -6,13 +6,13 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 02:23:23 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/18 23:32:01 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 11:15:15 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-int		pulsed(int key, t_game_draw *mygame)
+int	pulsed(int key, t_game_draw *mygame)
 {
 	if (key == KEY_W)
 		mygame->key.w_status = 1;
@@ -35,7 +35,7 @@ int		pulsed(int key, t_game_draw *mygame)
 	return (0);
 }
 
-int		nopulsed(int key, t_game_draw *mygame)
+int	nopulsed(int key, t_game_draw *mygame)
 {
 	if (key == KEY_W)
 		mygame->key.w_status = 0;
@@ -58,7 +58,7 @@ int		nopulsed(int key, t_game_draw *mygame)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_game_draw	*mygame;
 
@@ -69,9 +69,12 @@ int		main(int argc, char **argv)
 		if (parsename(argv[1], ".cub") == -1)
 			exit(ft_put_error(TIT_002, MSG1_002, 3));
 		if (argc == 3)
+		{
 			if (parsename(argv[2], "--save") == -1)
 				exit(ft_put_error(TIT_002, MSG1_002, 2));
-		if (!(mygame = malloc(sizeof(t_game_draw))))
+		}
+		mygame = malloc(sizeof(t_game_draw));
+		if (!mygame)
 			exit(ft_put_error(TIT_004, MSG1_005, 4));
 		ft_pre_var(mygame);
 		if (read_file(argc, argv[1], mygame) != 0)

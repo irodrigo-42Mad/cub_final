@@ -6,12 +6,12 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 14:09:30 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/18 13:39:33 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/24 12:37:02 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _LST_ERRORS_H
-# define _LST_ERRORS_H
+#ifndef LST_ERRORS_H
+# define LST_ERRORS_H
 
 # define TIT_001	"Check your program name\n"
 # define TIT_002	"Argument incorrect\n"

@@ -6,7 +6,7 @@
 #    By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/23 11:31:25 by irodrigo          #+#    #+#              #
-#    Updated: 2021/03/19 14:34:11 by irodrigo         ###   ########.fr        #
+#    Updated: 2021/03/29 17:57:22 by irodrigo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ NAMEBONUS = cub3D
 SRC = 	ft_create_map ft_check_error ft_draw_game ft_elm_threatment ft_init_structs \
 		ft_keyb_aux ft_keyboard ft_main ft_numbers ft_map_parser ft_parse_file ft_save_bmp \
 		ft_screen_save ft_set_raycast ft_set_sprite ft_sprite_draw gnl ft_libft_aux \
-		ft_file_check ft_aux_fnc ft_textures ft_file_parser ft_clean ft_create_map_aux
+		ft_file_check ft_aux_fnc ft_textures ft_file_parser ft_clean ft_create_map_aux \
+		ft_aux_fnc_second
 
 SRCBONUS = ft_create_map_bonus ft_check_error_bonus ft_draw_game_bonus ft_elm_threatment_bonus ft_init_structs_bonus \
 		ft_keyb_aux_bonus ft_keyboard_bonus ft_main_bonus ft_numbers_bonus ft_map_parser_bonus ft_parse_file_bonus ft_save_bmp_bonus \
@@ -52,7 +53,7 @@ OBJSBONUS = $(SRCCUBBONUS:.c=.o)
 LIBFT = libft/libft.a
 
 # COMPILER #
-CC = gcc -Wall -Wextra -Werror# -g # -fsanitize=address
+CC = gcc -Wall -Wextra -Werror -O3 #-g3 -fsanitize=address
 
 # COLOUR DEFINITION #
 BLUE = \033[0;34m
@@ -93,7 +94,7 @@ bonus:  $(OBJSBONUS)
 	@echo "Success creating Cub3D file"
 
 normi: fclean
-	old_norminette $(SRCCUB) ./libft
+	norminette $(SRCCUB) $(SRCCUBBONUS) ./libft ./cub3d.h ./lst_errors.h ./colors.h ./cub3d_bonus.h ./colors_bonus.h ./lst_errors_bonus.h
 
 clean:
 	@$(RM) $(OBJS)
@@ -102,6 +103,7 @@ clean:
 	@make -C libft/ clean
 	@$(RM) ${LIBFT}
 	@${RM} libmlx.dylib
+	@${RM} cub3d.h.gch
 	@echo "$(GREEN)==========REMOVED==========$(RESET)"
 	@echo "Success normal cleaning"
 

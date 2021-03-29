@@ -6,13 +6,13 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 02:35:13 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 14:42:14 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:23:33 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3d.h"
 
-static int		ft_resolution(t_game_draw *mygame, char *line, int *pos)
+static int	ft_resolution(t_game_draw *mygame, char *line, int *pos)
 {
 	if (mygame->map_read == 1)
 		exit(ft_put_error(TIT_009, MSG1_019, -9));
@@ -27,7 +27,15 @@ static int		ft_resolution(t_game_draw *mygame, char *line, int *pos)
 	return (0);
 }
 
-static int		getcolor(unsigned int *color, char *line,
+void	ft_if_comma(char *line, int *pos)
+{
+	if (line[*pos] != ',')
+		exit(ft_put_error("Falta la comma\n", "cadena no valida\n", -1));
+	(*pos)++;
+	ft_skip_spaces(line, pos);
+}
+
+static int	getcolor(unsigned int *color, char *line,
 						int *pos, t_game_draw *game)
 {
 	game->r = -1;
@@ -41,12 +49,10 @@ static int		getcolor(unsigned int *color, char *line,
 	ft_skip_spaces(line, pos);
 	if (line[*pos] != '\0')
 		game->r = ft_atoi_cub(line, pos);
-	(*pos)++;
-	ft_skip_spaces(line, pos);
+	ft_if_comma(line, pos);
 	if (line[*pos] != '\0')
 		game->g = ft_atoi_cub(line, pos);
-	(*pos)++;
-	ft_skip_spaces(line, pos);
+	ft_if_comma(line, pos);
 	if (line[*pos] != '\0')
 		game->b = ft_atoi_cub(line, pos);
 	ft_skip_spaces(line, pos);
@@ -57,10 +63,10 @@ static int		getcolor(unsigned int *color, char *line,
 	return (0);
 }
 
-static int		takeline(t_game_draw *mygame, char *line)
+static int	takeline(t_game_draw *mygame, char *line)
 {
-	char *temp2;
-	char *temp;
+	char	*temp2;
+	char	*temp;
 
 	if (mygame->map_read != 1)
 	{
@@ -78,7 +84,7 @@ static int		takeline(t_game_draw *mygame, char *line)
 	return (0);
 }
 
-int				get_info(t_game_draw *g, char *l)
+int	get_info(t_game_draw *g, char *l)
 {
 	if (l[g->pos] == 'R' && sp(l[g->pos + 1]) == 1)
 		g->n_err = ft_resolution(g, l, &g->pos);
@@ -102,5 +108,5 @@ int				get_info(t_game_draw *g, char *l)
 		g->n_err = takeline(g, " ");
 	else if (l[g->pos] == '\0' && g->map_read == 0)
 		g->n_err = 0;
-	return (g->n_err < 0 ? -1 : 0);
+	return (ft_n_err(g->n_err));
 }

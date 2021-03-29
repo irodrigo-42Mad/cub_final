@@ -6,13 +6,13 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 12:26:56 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 14:41:51 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/24 12:54:27 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			parsename(const char *text, const char *compare)
+int	parsename(const char *text, const char *compare)
 {
 	int len1;
 	int len2;
@@ -34,7 +34,7 @@ int			parsename(const char *text, const char *compare)
 	return (1);
 }
 
-int			ft_check_gamer(t_game_draw *mygame)
+int	ft_check_gamer(t_game_draw *mygame)
 {
 	if (mygame->gamer.count == 0)
 		exit(ft_put_error(TIT_003, MSG1_015, -1));

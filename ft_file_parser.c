@@ -6,13 +6,13 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 16:28:12 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 13:02:29 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/24 12:52:11 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_chk_texture(t_game_draw *mygame, char *line, char *elmt, int pos)
+int	ft_chk_texture(t_game_draw *mygame, char *line, char *elmt, int pos)
 {
 	int		status;
 	char	*path;
@@ -38,7 +38,7 @@ int		ft_chk_texture(t_game_draw *mygame, char *line, char *elmt, int pos)
 	exit(ft_put_error(TIT_006, MSG1_011, -1));
 }
 
-int		ft_checkfilestatus(int status, char *elmt, t_game_draw *mygame)
+int	ft_checkfilestatus(int status, char *elmt, t_game_draw *mygame)
 {
 	if (status > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 17:07:08 by jdiaz-co          #+#    #+#             */
-/*   Updated: 2021/03/17 14:01:56 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:46:13 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,38 @@ static int	result(int r, char **s, char **line, int fd)
 	return (fill_char(s, line, fd));
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char		*buffer;
 	int			r;
 	char		*aux;
 	static char	*s[4096];
 
-	if (!(buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1)) ||
-				fd < 0 || line == NULL)
+	buffer = malloc(sizeof(char *) * BUFFER_SIZE + 1);
+	if (!buffer || fd < 0 || line == NULL)
 		return (-1);
-	while ((r = read(fd, buffer, BUFFER_SIZE)) > 0)
+	r = read(fd, buffer, BUFFER_SIZE);
+	while (r > 0)
 	{
 		buffer[r] = '\0';
 		if (s[fd] == NULL)
 			s[fd] = ft_strdup(buffer);
 		else
 		{
-			aux = ft_strjoin(s[fd], buffer);
-			free(s[fd]);
-			s[fd] = aux;
+			aux = NULL;
+			ft_set_string(s, buffer, fd, aux);
 		}
 		if (ft_strchr(s[fd], '\n'))
 			break ;
+		r = read(fd, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
 	return (result(r, s, line, fd));
+}
+
+void	ft_set_string(char *s[4096], char *buffer, int fd, char *aux)
+{
+	aux = ft_strjoin(s[fd], buffer);
+	free(s[fd]);
+	s[fd] = aux;
 }

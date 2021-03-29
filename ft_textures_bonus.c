@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_textures.c                                      :+:      :+:    :+:   */
+/*   ft_textures_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 11:52:44 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 13:13:05 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 12:23:23 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	getdirandpos(t_game_draw *mygame, int x, int y)
 {
@@ -39,7 +39,7 @@ static void	getdirandpos(t_game_draw *mygame, int x, int y)
 	mygame->dirok = 1;
 }
 
-int			ft_check_content(t_game_draw *game)
+int	ft_check_content(t_game_draw *game)
 {
 	int	i;
 	int	j;
@@ -62,22 +62,24 @@ int			ft_check_content(t_game_draw *game)
 	return (1);
 }
 
-void		ft_setgamer(t_game_draw *mygame, int mat_pos, int line)
+void	ft_setgamer(t_game_draw *mygame, int mat_pos, int line)
 {
 	mygame->gamer.pos.x = mat_pos;
 	mygame->gamer.pos.y = line;
 }
 
-int			ft_reserve_worldmap(t_game_draw *mygame)
+int	ft_reserve_worldmap(t_game_draw *mygame)
 {
 	if (!mygame->worldmap)
-		if (!(mygame->worldmap = (char **)malloc(sizeof(char *)
-			* mygame->map_dim.h + 1)))
-			return (ft_put_error(TIT_004, MSG1_024, -1));
+	{
+		mygame->worldmap = ft_calloc((mygame->map_dim.h + 1), sizeof(char **));
+		if (!mygame->worldmap)
+			exit(ft_put_error(TIT_004, MSG1_024, -1));
+	}
 	return (0);
 }
 
-int			sp(char ch)
+int	sp(char ch)
 {
 	if (ch == ' ' || ch == '\t')
 		return (1);

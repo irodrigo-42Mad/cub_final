@@ -6,7 +6,7 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 11:57:05 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/16 21:53:49 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/29 12:27:08 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_clean_arr(char *data)
 {
-	int i;
+	int	i;
 
 	i = (ft_strlen(data) - 1);
-	while (data[i] != '\0' && i >= 0)
+	while (i >= 0 && data[i] != '\0')
 	{
 		data[i] = '\0';
 		i--;
@@ -26,7 +26,7 @@ void	ft_clean_arr(char *data)
 
 void	ft_fretable(char **fra, t_game_draw *mygame)
 {
-	int		pos;
+	int	pos;
 
 	pos = 0;
 	while (pos < mygame->map_dim.h)
@@ -41,27 +41,30 @@ void	ft_fretable(char **fra, t_game_draw *mygame)
 
 void	ft_freemap(t_game_draw *mygame)
 {
-	int		pos;
+	int	pos;
+	int	len;
 
 	pos = 0;
-	if (mygame->sprite != NULL)
+	while (pos < mygame->map_dim.h)
 	{
-		free(mygame->sprite);
-		mygame->sprite = NULL;
-	}
-	while (mygame->worldmap[pos] != NULL && pos < mygame->map_dim.h)
-	{
-		ft_clean_arr(mygame->worldmap[pos]);
+		len = ft_strlen(mygame->worldmap[pos]);
+		ft_bzero (mygame->worldmap[pos], (sizeof(char) * len));
+		free(mygame->worldmap[pos]);
 		mygame->worldmap[pos] = NULL;
 		pos++;
 	}
 	free(mygame->worldmap);
 	mygame->worldmap = NULL;
+	if (mygame->sprite != NULL)
+	{
+		free(mygame->sprite);
+		mygame->sprite = NULL;
+	}
 }
 
 void	ft_freearray(char **str)
 {
-	int elm;
+	int	elm;
 
 	elm = 0;
 	if (str)

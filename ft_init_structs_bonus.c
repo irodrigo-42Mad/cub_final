@@ -6,15 +6,15 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 09:44:20 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/21 11:06:33 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:10:13 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "./cub3d_bonus.h"
 
 void	ft_pre_var(t_game_draw *mygame)
 {
-	ft_bzero(mygame, 0);
+	ft_bzero(mygame, sizeof(t_game_draw));
 	mygame->win.w = 0;
 	mygame->win.h = 0;
 	mygame->screenshot = 0;
@@ -44,7 +44,7 @@ void	ft_init_rc(t_game_draw *mygame)
 	}
 }
 
-int		read_map(t_game_draw *mygame)
+int	read_map(t_game_draw *mygame)
 {
 	mygame->map_dim.h = get_height(mygame->mapchar);
 	mygame->map_dim.w = get_width(mygame->mapchar);
@@ -56,7 +56,7 @@ int		read_map(t_game_draw *mygame)
 	return (0);
 }
 
-int		read_file(int argc, char *pathname, t_game_draw *mygame)
+int	read_file(int argc, char *pathname, t_game_draw *mygame)
 {
 	int		fd;
 	char	*line;
@@ -101,7 +101,7 @@ void	ft_init_game(t_game_draw *mygame)
 	if (ft_load_txt(mygame) == 0)
 	{
 		mygame->mlx_win = mlx_new_window(mygame->mlx_ptr, mygame->win.w,
-			mygame->win.h, "cub3D");
+				mygame->win.h, "cub3D");
 		mlx_hook(mygame->mlx_win, 2, 1L << 0, pulsed, mygame);
 		mlx_hook(mygame->mlx_win, 3, 1L << 1, nopulsed, mygame);
 		mlx_hook(mygame->mlx_win, 17, 1L << 17, ft_close, mygame);

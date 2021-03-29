@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clean.c                                         :+:      :+:    :+:   */
+/*   ft_clean_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 11:57:05 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/16 21:53:49 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:07:42 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_clean_arr(char *data)
 {
-	int i;
+	int	i;
 
 	i = (ft_strlen(data) - 1);
-	while (data[i] != '\0' && i >= 0)
+	while (i >= 0 && data[i] != '\0')
 	{
 		data[i] = '\0';
 		i--;
@@ -61,7 +61,7 @@ void	ft_freemap(t_game_draw *mygame)
 
 void	ft_freearray(char **str)
 {
-	int elm;
+	int	elm;
 
 	elm = 0;
 	if (str)

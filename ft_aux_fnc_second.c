@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_numbers.c                                       :+:      :+:    :+:   */
+/*   ft_aux_fnc_second.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 23:36:46 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/25 10:13:33 by irodrigo         ###   ########.fr       */
+/*   Created: 2021/03/26 10:43:03 by irodrigo          #+#    #+#             */
+/*   Updated: 2021/03/29 12:28:17 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "cub3d.h"
 
-void	ft_swap_int(int *a, int *b)
+void	ft_init_var(int *line, int *pos, int *dim)
 {
-	int	iaux;
-
-	iaux = *a;
-	*a = *b;
-	*b = iaux;
+	*line = 0;
+	*dim = 0;
+	*pos = 0;
 }
 
-void	ft_swap_float(double *a, double *b)
+void	ft_free_textures(t_game_draw *mygame)
 {
-	double	faux;
+	int	i;
 
-	faux = *a;
-	*a = *b;
-	*b = faux;
+	i = -1;
+	while (++i < 8)
+	{
+		free(mygame->tx.wlone[i]);
+		mygame->tx.wlone[i] = NULL;
+		free(mygame->tx.wdata[i]);
+		mygame->tx.wdata[i] = NULL;
+	}
+	mygame->allspr_dist = NULL;
+	mygame->allspr_pos = NULL;
+	mygame->sprite = NULL;
 }

@@ -6,12 +6,12 @@
 /*   By: irodrigo <irodrigo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 10:32:29 by irodrigo          #+#    #+#             */
-/*   Updated: 2021/03/19 14:05:00 by irodrigo         ###   ########.fr       */
+/*   Updated: 2021/03/24 12:31:47 by irodrigo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _COLORS_BONUS_H
-# define _COLORS_BONUS_H
+#ifndef COLORS_BONUS_H
+# define COLORS_BONUS_H
 
 # define RGB_NONE		0xFF000000
 # define RGB_RED		0x00FF0000
